@@ -1,0 +1,24 @@
+{"SYSLOG_IDENTIFIER":"sshd","MESSAGE":"Failed password for root from 203.0.113.5 port 41234 ssh2"}
+{"SYSLOG_IDENTIFIER":"sshd","MESSAGE":"Failed password for root from 203.0.113.5 port 41235 ssh2"}
+{"SYSLOG_IDENTIFIER":"sshd","MESSAGE":"Failed password for root from 203.0.113.5 port 41236 ssh2"}
+{"SYSLOG_IDENTIFIER":"sshd","MESSAGE":"Failed password for invalid user admin from 198.51.100.7 port 51112 ssh2"}
+{"SYSLOG_IDENTIFIER":"sshd","MESSAGE":"Failed password for invalid user admin from 198.51.100.7 port 51113 ssh2"}
+{"SYSLOG_IDENTIFIER":"sshd","MESSAGE":"Invalid user oracle from 198.51.100.8 port 22311"}
+{"SYSLOG_IDENTIFIER":"sshd","MESSAGE":"Failed password for invalid user oracle from 198.51.100.8 port 22311 ssh2"}
+{"SYSLOG_IDENTIFIER":"sshd","MESSAGE":"Failed password for postgres from 192.0.2.99 port 33445 ssh2"}
+{"SYSLOG_IDENTIFIER":"sshd","MESSAGE":"Failed password for postgres from 192.0.2.99 port 33446 ssh2"}
+{"SYSLOG_IDENTIFIER":"sshd","MESSAGE":"Failed password for postgres from 192.0.2.99 port 33447 ssh2"}
+{"SYSLOG_IDENTIFIER":"sshd","MESSAGE":"User root from 203.0.113.5 not allowed because root login is disabled"}
+{"SYSLOG_IDENTIFIER":"sshd","MESSAGE":"reverse mapping checking getaddrinfo for x.example.com [203.0.113.5] failed"}
+{"SYSLOG_IDENTIFIER":"sshd","MESSAGE":"reverse mapping checking getaddrinfo for y.example.com [198.51.100.7] failed"}
+{"SYSLOG_IDENTIFIER":"sshd","MESSAGE":"reverse mapping checking getaddrinfo for z.example.com [192.0.2.99] failed"}
+{"SYSLOG_IDENTIFIER":"kernel","MESSAGE":"martian source 10.0.0.5 from 192.0.2.1, on dev eth0"}
+{"SYSLOG_IDENTIFIER":"kernel","MESSAGE":"martian source 10.0.0.5 from 192.0.2.2, on dev eth0"}
+{"SYSLOG_IDENTIFIER":"kernel","MESSAGE":"audit: backlog limit exceeded"}
+{"SYSLOG_IDENTIFIER":"kernel","MESSAGE":"nf_conntrack: table full, dropping packet"}
+{"SYSLOG_IDENTIFIER":"kernel","MESSAGE":"TCP: request_sock_TCP: Possible SYN flooding on port 80. Dropping request."}
+{"SYSLOG_IDENTIFIER":"systemd-journald","MESSAGE":"Suppressed 142 messages from /system.slice/foo.service"}
+{"SYSLOG_IDENTIFIER":"systemd-journald","MESSAGE":"Suppressed 211 messages from /system.slice/bar.service"}
+{"SYSLOG_IDENTIFIER":"systemd-journald","MESSAGE":"Suppressed 33 messages from /system.slice/baz.service"}
+{"SYSLOG_IDENTIFIER":"sudo","MESSAGE":"alice : 3 incorrect password attempts ; TTY=pts/0 ; PWD=/home/alice"}
+{"SYSLOG_IDENTIFIER":"systemd","MESSAGE":"myservice.service: Failed with result 'core-dump'."}
