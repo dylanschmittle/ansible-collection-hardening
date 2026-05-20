@@ -28,6 +28,18 @@ Some great guidelines can be found [here](https://wiki.openstack.org/wiki/GitCom
 
 ## Expectations
 
+### Changelog fragments
+
+User-visible changes must ship with a YAML fragment under
+[`changelogs/fragments/`](changelogs/fragments/). The fragment is rendered
+into `CHANGELOG.md` at release time by
+[antsibull-changelog](https://docs.ansible.com/projects/antsibull-changelog/).
+
+See [`changelogs/fragments/README.md`](changelogs/fragments/README.md) for
+the allowed sections and the writing style. For documentation, CI, or
+trivial cleanup PRs, use the `trivial:` section so the entry satisfies
+the CI check without appearing in the rendered changelog.
+
 ## Sign off Your Work
 
 The Developer Certificate of Origin (DCO) is a lightweight way for contributors to certify that they wrote or otherwise have the right to submit the code they are contributing to the project.
