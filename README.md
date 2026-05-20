@@ -72,9 +72,40 @@ Install the collection via ansible-galaxy:
 
 ## Using this collection
 
-Please refer to the examples in the readmes of the role.
+Each role can be used independently. A minimal playbook that applies all
+four production roles to a single host group looks like this:
 
-See [Ansible Using collections](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html) for more details.
+```yaml
+---
+- name: Harden infrastructure with devsec.hardening
+  hosts: all
+  become: true
+  collections:
+    - devsec.hardening
+
+  roles:
+    - role: devsec.hardening.os_hardening
+    - role: devsec.hardening.ssh_hardening
+      vars:
+        ssh_server_password_login: false
+    - role: devsec.hardening.mysql_hardening
+      when: "'db' in group_names"
+    - role: devsec.hardening.nginx_hardening
+      when: "'web' in group_names"
+```
+
+Each role exposes a large number of variables; the role-specific READMEs
+document them in full:
+
+- [os_hardening](roles/os_hardening/) — sysctl, PAM, auditd, modules,
+  SUID/SGID, etc.
+- [ssh_hardening](roles/ssh_hardening/) — `sshd_config`, MACs, ciphers,
+  kex algorithms; Linux + BSD support.
+- [mysql_hardening](roles/mysql_hardening/) — MariaDB and MySQL, removes
+  anonymous accounts, restricts host access.
+- [nginx_hardening](roles/nginx_hardening/) — TLS, headers, module set.
+
+See [Ansible Using collections](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html) for more details on installation and dependency resolution.
 
 ## Contributing to this collection
 
