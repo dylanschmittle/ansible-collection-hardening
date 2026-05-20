@@ -35,4 +35,7 @@ jobs:
           ./actionlint -version
 
       - name: Run actionlint
-        run: ./actionlint -color
+        # SC1090: "ShellCheck can't follow non-constant source" — the
+        # existing workflows source ~/.venv/.../activate which trips this
+        # false positive on a constant-but-tilde-expanded path.
+        run: ./actionlint -color -shellcheck="shellcheck -e SC1090"
