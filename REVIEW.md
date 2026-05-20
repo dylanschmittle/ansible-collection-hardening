@@ -18,9 +18,14 @@ tested hardening to common server components, aligned with the
 | mysql-baseline | `mysql_hardening` | [roles/mysql_hardening/README.md](roles/mysql_hardening/README.md) |
 | nginx-baseline | `nginx_hardening` | [roles/nginx_hardening/README.md](roles/nginx_hardening/README.md) |
 
-Two additional role slots are reserved but currently empty placeholders:
-`apache_hardening` and `windows_hardening`. The standalone archives for these
-are still linked from the top-level README.
+Two additional role slots are reserved as **git submodules** pointing at
+the archived standalone repositories: `apache_hardening`
+(`https://github.com/dev-sec/ansible-apache-hardening/`) and
+`windows_hardening` (`https://github.com/dev-sec/ansible-windows-hardening/`).
+They are declared in [`.gitmodules`](.gitmodules) and are not initialised
+in fresh clones — `ls roles/apache_hardening/` and
+`ls roles/windows_hardening/` therefore look empty. The standalone
+archives are also linked from the top-level README.
 
 ## 2. Metadata
 
@@ -44,8 +49,8 @@ are still linked from the top-level README.
 | `ssh_hardening` | yes | ~228 | Linux + BSD support; multiple templates. |
 | `mysql_hardening` | yes | ~51 | MariaDB + MySQL flavours. |
 | `nginx_hardening` | yes | ~33 | Headers, TLS, modules. Defaults are sparsely commented. |
-| `apache_hardening` | **no** | — | Empty placeholder. |
-| `windows_hardening` | **no** | — | Empty placeholder. |
+| `apache_hardening` | n/a | — | Uninitialised submodule (see [`.gitmodules`](.gitmodules)). |
+| `windows_hardening` | n/a | — | Uninitialised submodule (see [`.gitmodules`](.gitmodules)). |
 
 Each active role has an `argument_specs.yml` (auto-rendered into the README
 via the `roles-readme` workflow using
@@ -90,10 +95,12 @@ scope.
 4. **`.gitignore` is short** (4 lines) and misses common Python / editor
    artefacts (`venv/`, `__pycache__/`, `*.swp`, `.idea/`, `.vscode/`,
    `.DS_Store`, `*.retry`, etc.).
-5. **Placeholder roles have no README.** `roles/apache_hardening/` and
-   `roles/windows_hardening/` are empty directories; a one-paragraph README
-   noting their status and linking to the archived standalone repositories
-   would help users who land there directly.
+5. **In-development roles are uninitialised submodules.** `apache_hardening`
+   and `windows_hardening` are git submodules pointing at the archived
+   standalone repositories (see [`.gitmodules`](.gitmodules)). They are not
+   initialised in fresh clones, so the role directories look empty. The
+   structural test suite verifies the `.gitmodules` entries so the
+   submodule pointers do not silently disappear.
 6. **Top-level README has no end-to-end example.** Section *Using this
    collection* (line 75) says "refer to the readmes of the role" but does not
    show a single playbook composing the four roles.
