@@ -1,0 +1,32 @@
+# Example overlay produced by journal-hardening-advisor.
+# Drop into your inventory's group_vars/<group>.yml — values are passed to the
+# devsec.hardening.os_hardening and ssh_hardening roles.
+
+# ----- security overlay (sysctl + ssh) -----
+# Overrides the role's defaults.
+sysctl_config:
+  net.ipv4.conf.all.log_martians: 1        # evidence: 412 martian-source kernel messages
+  fs.suid_dumpable: 0                      # evidence: 3 units exited via core-dump
+os_auditd_enabled: true                    # evidence: 27 audit-loss messages
+
+# ssh_hardening overrides
+ssh_max_auth_retries: 2                    # evidence: 1,287 sshd auth failures from 14 sources
+ssh_server_password_login: false           # evidence: failures spread across many sources
+ssh_login_grace_time: 30s
+ssh_permit_root_login: "no"                # evidence: 9 root login attempts
+ssh_use_dns: false                         # evidence: 22 reverse-DNS failures slowing sshd
+
+# ----- performance overlay (sysctl + journald) -----
+# Most keys below are ADDITIONS — not part of the security baseline.
+sysctl_config:
+  net.netfilter.nf_conntrack_max: 524288   # evidence: 4 conntrack-table-full kernel messages
+  net.ipv4.tcp_max_syn_backlog: 4096       # evidence: 11 listen-queue overflow messages
+  net.core.somaxconn: 4096
+
+# journald advisory — drop in at /etc/systemd/journald.conf.d/10-rate-limit.conf
+# [Journal]
+# RateLimitIntervalSec=30s
+# RateLimitBurst=10000
+
+# ----- UFW commands suggested -----
+# - ansible.builtin.command: ufw limit 22/tcp

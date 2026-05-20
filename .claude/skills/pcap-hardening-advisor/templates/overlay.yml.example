@@ -1,0 +1,22 @@
+# Example overlay produced by pcap-hardening-advisor.
+# Drop into your inventory's group_vars/<group>.yml — values merge into
+# the role's sysctl_config dict.
+
+# ----- security overlay (sysctl_security.yml) -----
+sysctl_config:
+  net.ipv4.tcp_syncookies: 1               # evidence: 14,392 SYNs vs 1,201 SYN-ACKs (ratio 12.0x)
+  net.ipv4.tcp_rfc1337: 1                  # evidence: 43 RSTs after FIN exchange
+  net.ipv4.icmp_echo_ignore_broadcasts: 1  # evidence: 28 ICMP echoes to broadcast
+  net.ipv4.conf.all.accept_redirects: 0    # evidence: 11 ICMP redirects observed
+
+# ----- performance overlay (sysctl_performance.yml) -----
+# These keys are ADDITIONS — not part of the os_hardening security baseline.
+sysctl_config:
+  net.ipv4.tcp_max_syn_backlog: 4096       # evidence: 412 SYN retransmits
+  net.core.somaxconn: 4096                 # paired with tcp_max_syn_backlog
+  # net.ipv4.tcp_tw_reuse: 1               # uncomment if many client-side TIME_WAIT entries
+
+# ----- UFW commands the skill suggested -----
+# Run these in a play that targets a host with ufw installed:
+#   - ansible.builtin.command: ufw allow 443/tcp
+#   - ansible.builtin.command: ufw limit 22/tcp
