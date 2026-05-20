@@ -4,7 +4,7 @@ version: 10.1.0
 readme: README.md
 authors:
   - dev-sec <hello@dev-sec.io>
-description: 'This collection provides battle tested hardening for Linux, SSH, nginx, MySQL'
+description: 'Battle-tested hardening for Linux, OpenSSH, nginx and MySQL/MariaDB, aligned with the DevSec Inspec baselines (linux-, ssh-, nginx- and mysql-baseline).'
 license:
   - Apache-2.0
 license_file: ''
