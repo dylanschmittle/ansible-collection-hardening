@@ -14,6 +14,12 @@ It works with the following nginx-roles, including, but not limited to:
 
 **NOTE: This role does not work with nginx 1.0.15 or older! Please use the latest version from the official nginx repositories!**
 
+## Idempotency and rollback
+
+The role is idempotent: re-running it against an already-hardened nginx installation produces no changes. The role rewrites `nginx.conf` from a template; sites under `conf.d/` and `sites-available/` are left untouched.
+
+There is **no built-in rollback**. Reverting requires restoring `nginx.conf` from backup before reloading nginx. Always validate with `nginx -t` before reloading the service.
+
 <!-- BEGIN_ANSIBLE_DOCS -->
 
 ## Supported Operating Systems
