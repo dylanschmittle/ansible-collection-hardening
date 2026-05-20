@@ -4,7 +4,7 @@ Fast, syntactic checks that complement the per-role
 [molecule](https://ansible.readthedocs.io/projects/molecule/) suites. They
 catch the kind of mistakes that don't otherwise surface until a galaxy
 build or a full molecule run: missing required `galaxy.yml` keys, an
-unparseable `meta/runtime.yml`, a role whose `argument_specs.yml` lost its
+unparsable `meta/runtime.yml`, a role whose `argument_specs.yml` lost its
 `main` entry, a top-level doc that got deleted in a refactor, and so on.
 
 This suite **does not** run any Ansible tasks against a target host;

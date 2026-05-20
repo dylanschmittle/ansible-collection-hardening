@@ -3,7 +3,7 @@
 These are fast, syntactic checks that complement the per-role molecule
 suites. They run on every PR via .github/workflows/structure-tests.yml and
 catch the kind of mistakes that don't surface until a galaxy build or a
-molecule run: missing required galaxy.yml keys, an unparseable
+molecule run: missing required galaxy.yml keys, an unparsable
 meta/runtime.yml, a deleted top-level doc, and so on.
 """
 
