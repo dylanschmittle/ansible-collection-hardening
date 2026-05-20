@@ -40,6 +40,27 @@ the allowed sections and the writing style. For documentation, CI, or
 trivial cleanup PRs, use the `trivial:` section so the entry satisfies
 the CI check without appearing in the rendered changelog.
 
+### Argument specs
+
+Every new role variable must be declared in
+`roles/<role>/meta/argument_specs.yml` with at minimum a `description`
+(structural tests enforce this) and a `version_added` set to the
+collection version the option will first ship in. For example:
+
+```yaml
+ssh_strict_host_key_checking:
+  type: bool
+  default: true
+  version_added: 11.0.0
+  description: Whether sshd should reject connections from unknown hosts.
+```
+
+Existing options predate this rule and are not backfilled; the
+`version_added` requirement applies only to options added going forward.
+The role README is regenerated from `argument_specs.yml` by
+`aar-doc`, so accurate `version_added` values flow through to the
+rendered docs and to Galaxy.
+
 ## Sign off Your Work
 
 The Developer Certificate of Origin (DCO) is a lightweight way for contributors to certify that they wrote or otherwise have the right to submit the code they are contributing to the project.
