@@ -1,4 +1,40 @@
 .kitchen
 hosts
 Gemfile.lock
-.venv
+
+# Python
+.venv/
+venv/
+.env/
+env/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.tox/
+.mypy_cache/
+.ruff_cache/
+
+# Ansible
+*.retry
+collections/
+ansible_collections/
+
+# Molecule / Docker
+.molecule_cache/
+
+# Editors / IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build artefacts
+*.tar.gz
+/dist/
+/build/
