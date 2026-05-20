@@ -55,6 +55,9 @@ argument_specs:
       ssh_client_alive_interval:
         default: 300
         description: specifies an interval for sending keepalive messages.
+          Compliance reference - ComplianceAsCode rule
+          `sshd_set_idle_timeout` carries the full CIS / DISA STIG / NIST 800-53
+          / CCE identifier set.
         type: int
       ssh_client_alive_count:
         default: 3
@@ -79,7 +82,9 @@ argument_specs:
       ssh_permit_root_login:
         default: 'no'
         description: Disable root-login. Set to `'without-password'` or `'yes'` to
-          enable root-login - The quotes are required!
+          enable root-login - The quotes are required! Compliance reference -
+          ComplianceAsCode rule `sshd_disable_root_login` carries the full
+          CIS / DISA STIG / NIST 800-53 / CCE identifier set.
       ssh_allow_tcp_forwarding:
         default: 'no'
         description: Set to `'no'` or `false` to disable TCP Forwarding. Set to `'yes'`
@@ -108,7 +113,9 @@ argument_specs:
       ssh_use_pam:
         default: true
         type: bool
-        description: Set to `false` to disable pam authentication.
+        description: Set to `false` to disable pam authentication. Compliance
+          reference - ComplianceAsCode rule `sshd_enable_pam` carries the full
+          CIS / DISA STIG / NIST 800-53 / CCE identifier set.
       ssh_gssapi_support:
         default: false
         type: bool
@@ -215,7 +222,10 @@ argument_specs:
         type: bool
         description: 'Set to `true` to allow password-based authentication to the
           ssh server. You probably also need to change `sshd_authenticationmethods`
-          to include `password` if you set `ssh_server_password_login`: `true`.'
+          to include `password` if you set `ssh_server_password_login`: `true`.
+          Compliance reference - ComplianceAsCode rule
+          `sshd_disable_password_authentication` carries the full CIS / DISA STIG
+          / NIST 800-53 / CCE identifier set.'
       ssh_banner:
         default: false
         type: bool
@@ -243,7 +253,9 @@ argument_specs:
       ssh_max_auth_retries:
         default: 2
         description: Specifies the maximum number of authentication attempts permitted
-          per connection.
+          per connection. Compliance reference - ComplianceAsCode rule
+          `sshd_set_max_auth_tries` carries the full CIS / DISA STIG / NIST 800-53
+          / CCE identifier set.
         type: int
       ssh_max_sessions:
         default: 10
