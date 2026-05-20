@@ -72,6 +72,16 @@ Install the collection via ansible-galaxy:
 
 ## Using this collection
 
+> [!WARNING]
+> These roles change real system configuration: `sshd_config`, PAM, sysctl,
+> filesystem permissions, MySQL grants, nginx TLS settings, and more. On
+> first use, **dry-run the playbook in check mode (`ansible-playbook
+> --check --diff`) against a non-production host**, confirm you have an
+> out-of-band recovery path (console / break-glass account / working
+> `sudo`), and review the role-specific READMEs for the variables you may
+> need to override. Misconfigured hardening can lock you out of a host as
+> effectively as any attacker.
+
 Each role can be used independently. A minimal playbook that applies all
 four production roles to a single host group looks like this:
 
