@@ -1,0 +1,7 @@
+---
+minor_changes:
+  - >-
+    Adopt antsibull-changelog: per-PR changelog entries now live under
+    ``changelogs/fragments/`` and are rendered into ``CHANGELOG.md`` at
+    release time. See ``changelogs/fragments/README.md`` for the
+    contributor workflow.
