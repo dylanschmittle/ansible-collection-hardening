@@ -53,6 +53,12 @@ We disable the following filesystems, because they're most likely not used:
 
 To prevent some of the filesystems from being disabled, add them to the `os_filesystem_whitelist` variable.
 
+## Idempotency and rollback
+
+The role is idempotent: re-running it against an already-hardened host produces no changes. Configuration is applied in a declarative manner via templated files and `sysctl` settings.
+
+There is **no built-in rollback**. Reverting the role's effects requires either restoring the affected files from backup (`/etc/login.defs`, `/etc/security/limits.d/`, `/etc/sysctl.d/`, `/etc/modprobe.d/`, PAM stack, audit rules, etc.) or explicitly overriding the relevant `os_*` defaults to neutralise specific changes and re-running the role. Take a snapshot or back up `/etc` before first use on a production host.
+
 ## Known Limitations
 
 ### Docker support

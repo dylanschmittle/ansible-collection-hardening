@@ -21,6 +21,12 @@ Further information is available at [Deutsche Telekom (German)](http://www.telek
 - An existing installation of MySQL or MariaDB.
 - python-jmespath on the ansible host
 
+## Idempotency and rollback
+
+The role is idempotent: re-running it against an already-hardened MySQL/MariaDB instance produces no changes. Configuration changes go into a dedicated drop-in (`mysql_hardening.cnf`), not the vendor-shipped `my.cnf`, so the original config is left untouched.
+
+There is **no built-in rollback**. To revert: remove the hardening drop-in, restart the database, and (if you want to undo the user / database removals) restore the `mysql.user` and `mysql.db` tables from a `mysqldump` backup. The role removes anonymous accounts, accounts without passwords, and the `test` database — take a logical backup first if any of these are in use.
+
 <!-- BEGIN_ANSIBLE_DOCS -->
 
 ## Supported Operating Systems

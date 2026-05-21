@@ -43,6 +43,12 @@ Since Debian 12 and Ubuntu 22.04 the ssh-daemon is not running by default anymor
 We revert this change to its traditional behaviour.
 For more information, see [this issue](https://github.com/dev-sec/ansible-collection-hardening/issues/763).
 
+## Idempotency and rollback
+
+The role is idempotent: re-running it against an already-hardened host produces no changes — except for the port-change edge case documented in [Changing the default port and idempotency](#changing-the-default-port-and-idempotency).
+
+There is **no built-in rollback**. Reverting requires restoring `/etc/ssh/sshd_config`, `/etc/ssh/ssh_config`, and any drop-ins under `/etc/ssh/sshd_config.d/` and `/etc/ssh/ssh_config.d/` from backup. Because the role disables root login and may disable password authentication, ensure you have a working sudo-capable user with key-based access (or out-of-band console access) **before** applying.
+
 <!-- BEGIN_ANSIBLE_DOCS -->
 
 ## Supported Operating Systems
