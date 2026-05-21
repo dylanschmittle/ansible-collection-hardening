@@ -1,0 +1,16 @@
+---
+# Ansible collections required to run the test suites in this repository.
+#
+# Runtime collection dependencies (those required by the roles themselves
+# in user playbooks) live in `galaxy.yml` under `dependencies:` and are
+# resolved at install time. The entries below are *additional* collections
+# needed only for molecule scenarios and structural tests.
+#
+# Install with:
+#   ansible-galaxy collection install -r tests/collection-requirements.yml
+#
+# Currently the test suites do not require any collection beyond the
+# runtime dependencies. This file exists so that test-only deps have a
+# documented home as the test surface grows.
+
+collections: []
