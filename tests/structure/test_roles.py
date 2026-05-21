@@ -84,6 +84,36 @@ def test_active_role_argument_specs_options_have_descriptions(
     )
 
 
+VARS_LOOKUP_CHAIN = (
+    "{{ ansible_facts.distribution }}_{{ ansible_facts.distribution_major_version",
+    "{{ ansible_facts.distribution }}.yml",
+    "{{ ansible_facts.os_family }}_{{ ansible_facts.distribution_major_version",
+    "{{ ansible_facts.os_family }}.yml",
+)
+
+
+@pytest.mark.parametrize("role", ACTIVE_ROLES)
+def test_per_os_vars_lookup_chain(roles_dir: Path, role: str) -> None:
+    """Roles that ship a vars/ directory must load it via the four-file
+    with_first_found chain documented in docs/vars-lookup.md.
+
+    Dropping one of the four levels (easy to do during a refactor) would
+    let per-distribution overrides silently stop applying."""
+
+    vars_dir = roles_dir / role / "vars"
+    if not vars_dir.is_dir():
+        pytest.skip(f"{role} has no vars/ directory")
+
+    tasks_text = "\n".join(
+        p.read_text() for p in (roles_dir / role / "tasks").glob("*.yml")
+    )
+    for needle in VARS_LOOKUP_CHAIN:
+        assert needle in tasks_text, (
+            f"{role}: tasks/ does not reference the lookup level "
+            f"{needle!r}; see docs/vars-lookup.md"
+        )
+
+
 @pytest.mark.parametrize("role,expected_url", list(SUBMODULE_ROLES.items()))
 def test_submodule_role_declared_in_gitmodules(
     repo_root: Path, role: str, expected_url: str
