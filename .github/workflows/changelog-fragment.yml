@@ -1,0 +1,79 @@
+---
+name: Changelog Fragment
+
+on:  # yamllint disable-line rule:truthy
+  pull_request:
+    branches: [master]
+    types: [opened, reopened, synchronize, labeled, unlabeled]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  changelog:
+    name: Require a changelog fragment
+    runs-on: ubuntu-latest
+    # Skip when the PR carries the 'skip-changelog' label.
+    if: "!contains(github.event.pull_request.labels.*.name, 'skip-changelog')"
+    steps:
+      - name: Checkout PR
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Determine changed files
+        id: diff
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          git fetch --no-tags --depth=1 origin "$BASE_SHA" 2>/dev/null || true
+          changed=$(git diff --name-only "$BASE_SHA"..."$HEAD_SHA")
+          echo "Changed files:"
+          echo "$changed"
+          {
+            echo "files<<EOF"
+            echo "$changed"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Decide whether a fragment is required
+        id: required
+        env:
+          CHANGED: ${{ steps.diff.outputs.files }}
+        run: |
+          set -euo pipefail
+          # Triggers: anything under roles/, plus galaxy.yml, plus meta/.
+          if echo "$CHANGED" | grep -E '^(roles/|galaxy\.yml$|meta/)' >/dev/null; then
+            echo "required=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "required=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Check for a new fragment
+        if: steps.required.outputs.required == 'true'
+        env:
+          CHANGED: ${{ steps.diff.outputs.files }}
+        run: |
+          set -euo pipefail
+          # New fragment files in this PR (added or modified, *.yml or *.yaml).
+          new_fragments=$(echo "$CHANGED" \
+            | grep -E '^changelogs/fragments/.+\.(yml|yaml)$' \
+            | grep -v '/README\.md$' \
+            || true)
+          if [ -z "$new_fragments" ]; then
+            cat <<'MSG' >&2
+          ::error::This PR changes role / meta / galaxy.yml content but does
+          not add a changelogs/fragments/*.yml entry.
+
+          Add a fragment (see changelogs/fragments/README.md), or apply the
+          'skip-changelog' label if the change really has no user-visible
+          impact.
+          MSG
+            exit 1
+          fi
+          echo "Found changelog fragment(s):"
+          echo "$new_fragments"
